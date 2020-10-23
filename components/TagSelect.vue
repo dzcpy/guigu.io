@@ -2,7 +2,7 @@
   <div class="select" @click="clickSelect">
     <span
       v-for="(tag, index) in tags"
-      :key="tag.name"
+      :key="tag.name + index"
       :style="{ backgroundColor: '#' + tag.hex }"
       class="tag"
     >
@@ -13,6 +13,7 @@
       :style="{ marginLeft: tags.length ? '0' : '10px' }"
       type="text"
       @keyup="onInputKeyup($event.target, $event.key)"
+      @blur="onInputKeyup($event.target, 'Enter')"
     />
   </div>
 </template>
@@ -35,15 +36,24 @@ export default {
     },
     onInputKeyup(input, key) {
       const name = input.value
-      if (key === 'Enter') {
-        let tagData = { name, hex: false || '#AAA' }
-        this.allColors.forEach((item) => {
-          if (item.name.toLowerCase() === input.value.toLowerCase()) {
-            tagData = { ...item, name }
-          }
-        })
-        input.value = ''
-        this.tags.push(tagData)
+      if (!name.trim()) {
+        return
+      }
+      let tagData
+      switch (key) {
+        case 'Enter':
+          tagData = { name, hex: false || '#AAA' }
+          this.allColors.forEach((item) => {
+            if (item.name.toLowerCase() === input.value.toLowerCase()) {
+              tagData = { ...item, name }
+            }
+          })
+          input.value = ''
+          this.tags.push(tagData)
+          break
+        case 'Escape':
+          input.value = ''
+          break
       }
     },
   },
