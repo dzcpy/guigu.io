@@ -8,7 +8,7 @@
     >
       {{ tag.name }} <span class="close" @click="clickTag(index)">✕</span>
     </span>
-    <input type="text" @keyup="onInputKeyup($event.target.value, $event.key)" />
+    <input type="text" @keyup="onInputKeyup($event.target, $event.key)" />
   </div>
 </template>
 
@@ -25,15 +25,17 @@ export default {
     clickTag(index) {
       this.tags.splice(index, 1)
     },
-    onInputKeyup(name, key) {
+    onInputKeyup(input, key) {
+      const name = input.value
       if (key === 'Enter') {
         let tagData = { name, hex: false || '#AAA' }
         this.allColors.forEach((item) => {
           console.log(item)
-          if (item.name.toLowerCase() === name.toLowerCase()) {
+          if (item.name.toLowerCase() === input.value.toLowerCase()) {
             tagData = { ...item, name }
           }
         })
+        input.value = ''
         this.tags.push(tagData)
       }
     },
