@@ -1,8 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
-      <h1 class="title">guigu.io</h1>
+      <h1 class="title"><Logo /> guigu.io</h1>
       <TagSelect />
       <div class="links">
         <a
@@ -37,10 +36,15 @@ export default {}
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 80px;
+  line-height: 80px;
+  padding-bottom: 20px;
   color: #35495e;
   letter-spacing: 1px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+.title svg {
+  margin-bottom: -20px;
 }
 
 .subtitle {

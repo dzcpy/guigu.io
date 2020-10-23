@@ -38,7 +38,6 @@ export default {
       if (key === 'Enter') {
         let tagData = { name, hex: false || '#AAA' }
         this.allColors.forEach((item) => {
-          console.log(item)
           if (item.name.toLowerCase() === input.value.toLowerCase()) {
             tagData = { ...item, name }
           }
@@ -57,9 +56,8 @@ export default {
   border-radius: 5px;
   height: 35px;
   line-height: 30px;
-  width: 350px;
+  width: 370px;
   text-align: left;
-  vertical-align: center;
   overflow: hidden;
   cursor: text;
 }

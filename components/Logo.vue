@@ -22,3 +22,9 @@
     </g>
   </svg>
 </template>
+<style scoped>
+svg {
+  width: 70px;
+  height: 70px;
+}
+</style>
