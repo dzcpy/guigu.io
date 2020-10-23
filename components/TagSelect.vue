@@ -1,5 +1,5 @@
 <template>
-  <div class="select">
+  <div class="select" @click="clickSelect">
     <span
       v-for="(tag, index) in tags"
       :key="tag.name"
@@ -9,6 +9,7 @@
       {{ tag.name }} <span class="close" @click="clickTag(index)">✕</span>
     </span>
     <input
+      ref="input"
       :style="{ marginLeft: tags.length ? '0' : '10px' }"
       type="text"
       @keyup="onInputKeyup($event.target, $event.key)"
@@ -26,6 +27,9 @@ export default {
     }
   },
   methods: {
+    clickSelect() {
+      this.$refs.input.focus()
+    },
     clickTag(index) {
       this.tags.splice(index, 1)
     },
