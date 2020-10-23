@@ -8,7 +8,11 @@
     >
       {{ tag.name }} <span class="close" @click="clickTag(index)">✕</span>
     </span>
-    <input type="text" @keyup="onInputKeyup($event.target, $event.key)" />
+    <input
+      :style="{ marginLeft: tags.length ? '0' : '10px' }"
+      type="text"
+      @keyup="onInputKeyup($event.target, $event.key)"
+    />
   </div>
 </template>
 
