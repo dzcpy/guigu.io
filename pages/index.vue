@@ -5,6 +5,14 @@
       <TagSelect />
       <div class="links">
         <a
+          href="https://guigu.io/interview-8792"
+          rel="noopener noreferrer"
+          target="_blank"
+          class="button--green"
+        >
+          Interview
+        </a>
+        <a
           href="https://github.com/dzcpy/guigu.io"
           target="_blank"
           rel="noopener noreferrer"
