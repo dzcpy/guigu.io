@@ -6,6 +6,7 @@
         :key="`${tag.name}-${index}`"
         :style="{ backgroundColor: '#' + tag.hex }"
         class="tag"
+        @click.prevent.stop=""
       >
         {{ tag.name }}
         <span class="close" @click.stop.prevent="removeTag(index)">✕</span>
