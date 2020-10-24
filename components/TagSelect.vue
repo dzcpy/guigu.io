@@ -86,7 +86,6 @@ export default {
           })
           this.$refs.input.value = ''
           this.selectedTags.push(tagData)
-          this.resizeSelect()
           break
         case 'Escape':
           this.$refs.input.value = ''
@@ -163,7 +162,6 @@ export default {
         }
       }
       this.$refs.input.value = ''
-      this.resizeSelect()
     },
     elementIsOverflown(element) {
       return (
@@ -181,11 +179,19 @@ export default {
       }
       this.resizeSelect()
     },
-    resizeSelect() {
+    resizeSelect(recheck = true) {
       const element = this.$refs.select
       if (this.elementIsOverflown(element)) {
         element.style.height = element.scrollHeight + 7 + 'px'
+      } else if (recheck) {
+        element.style.height = '35px'
+        this.$nextTick(() => this.resizeSelect(false))
       }
+    },
+  },
+  watch: {
+    selectedTags() {
+      this.$nextTick(() => this.resizeSelect())
     },
   },
 }
