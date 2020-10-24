@@ -14,10 +14,11 @@
         ref="input"
         type="text"
         class="input"
-        @input="resizeInput"
+        @input.passive="resizeInput"
         @keyup="onInputKeyup($event.key)"
         @blur="onBlur"
       />
+      <span ref="shadow" class="shadow-input"></span>
     </div>
     <transition name="fade">
       <div v-show="showDropdown" class="dropdown">
@@ -61,7 +62,7 @@ export default {
       element.focus()
       this.openDropdown()
       if (element.value === '') {
-        element.style.width = '2em'
+        element.style.width = '3em'
       }
     },
     removeTag(index) {
@@ -170,12 +171,16 @@ export default {
       )
     },
     resizeInput() {
-      const element = this.$refs.input
-      if (this.elementIsOverflown(element)) {
-        element.style.width =
-          element.offsetWidth +
-          parseInt(window.getComputedStyle(element).fontSize) * 4 +
-          'px'
+      const elementInput = this.$refs.input
+      const elementShadow = this.$refs.shadow
+      const fontSize = parseInt(window.getComputedStyle(elementInput).fontSize)
+      elementShadow.textContent = elementInput.value
+      if (this.elementIsOverflown(elementInput)) {
+        elementInput.style.width =
+          elementInput.offsetWidth + fontSize * 3 + 'px'
+      } else {
+        elementInput.style.width =
+          elementShadow.offsetWidth + fontSize * 3 + 'px'
       }
       this.resizeSelect()
     },
@@ -211,9 +216,10 @@ $select-width: 370px;
   text-align: left;
   overflow: hidden;
   cursor: text;
-  input {
+  input,
+  .shadow-input {
     border: none;
-    width: 2em;
+    width: 3em;
     max-width: calc(#{$select-width} - 12px);
     display: inline-block;
     overflow: visible;
@@ -221,9 +227,16 @@ $select-width: 370px;
     margin: 5px 0 0 5px;
     border-radius: 5px;
     line-height: 23px;
-    &:focus {
-      outline: none;
-    }
+  }
+  input:focus {
+    outline: none;
+  }
+  .shadow-input {
+    width: auto !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -99999em !important;
+    top: -99999em !important;
   }
   .tag {
     display: inline-block;
@@ -244,7 +257,6 @@ $select-width: 370px;
     }
   }
 }
-
 .dropdown {
   width: $select-width;
   max-height: 250px;
@@ -269,6 +281,7 @@ $select-width: 370px;
       list-style: none;
       padding: 0 5px;
       cursor: pointer;
+      overflow: hidden;
       &:hover {
         background-color: #e6f7ff !important;
       }
